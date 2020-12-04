@@ -5,9 +5,12 @@ import InputElement from './Input';
 
 const App = () => {
   const [status, setStatus] = useState('');
+  const [showLoader, setShowLoader] = useState(false);
 
   const handleSubmit = e => {
     e.preventDefault();
+
+    setShowLoader(true);
   
     const name = e.target.querySelector('input[type="text"]').value;
     const amount = e.target.querySelector('input[type="number"]').value;
@@ -25,18 +28,22 @@ const App = () => {
       .then(response => {
         console.log(response);
         setStatus('SUCCESS');
+        setShowLoader(false);
       })
       .catch(error => {
         console.error(error);
         setStatus('ERROR');
+        setShowLoader(false);
       });
   };
 
   if (status === 'SUCCESS') {
     return (
-      <p>
-        Płatność udana!
-      </p>
+      <Wrapper>
+        <Header2>Dziękujemy za wsparcie!</Header2>
+        <div style={{marginBottom: '2rem'}}></div>
+        <BigLogo/>
+      </Wrapper>
     );
   }
   else{
@@ -57,7 +64,7 @@ const App = () => {
           <InputElement type='name'/>
           <InputElement type='mail'/>
           <Link href="./polityka.html">Polityka prywatności</Link>
-          <Button value="Wspieram" />
+          { showLoader ? <Loader><div></div><div></div><div></div><div></div></Loader> : <Button value="Wspieram" /> }
           {status === 'ERROR' && (<p>Something went wrong. Please try again.</p>)}
         </Form>
       </Wrapper>
@@ -132,5 +139,69 @@ const Button = styled.input.attrs(
   font-weight: bold;
   cursor: pointer;
 `
+
+const Loader = styled.div`
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+
+  & div {
+    position: absolute;
+    top: 33px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #231F20;
+    animation-timing-function: cubic-bezier(0, 1, 1, 0);
+  }
+
+  div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1 0.6s infinite;
+  }
+
+  div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+
+  div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2 0.6s infinite;
+  }
+
+  div:nth-child(4) {
+    left: 56px;
+    animation: lds-ellipsis3 0.6s infinite;
+  }
+
+  @keyframes lds-ellipsis1 {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes lds-ellipsis3 {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+
+  @keyframes lds-ellipsis2 {
+    0% {
+      transform: translate(0, 0);
+    }
+    100% {
+      transform: translate(24px, 0);
+    }
+  }
+`;
 
 export default App;

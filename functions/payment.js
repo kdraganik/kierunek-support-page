@@ -3,6 +3,6 @@ exports.handler = (event, _context, callback) => {
 
   callback(null, {
     statusCode: 200,
-    body: JSON.stringify({ task: "Redirect data to payU", dataToSend:  event.body})
+    body: JSON.stringify({ task: "Redirect data to payU API...", dataToSend:  event.body})
   });
 };
