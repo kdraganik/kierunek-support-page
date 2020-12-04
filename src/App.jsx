@@ -58,7 +58,7 @@ const App = () => {
           <InputElement type='mail'/>
           <Link href="./polityka.html">Polityka prywatności</Link>
           <Button value="Wspieram" />
-          {status === 'ERROR' && (<p style={{color: "red", marginTop: "1rem"}}>Something went wrong. Please try again.</p>)}
+          {status === 'ERROR' && (<p>Something went wrong. Please try again.</p>)}
         </Form>
       </Wrapper>
     )
