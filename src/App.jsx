@@ -109,7 +109,7 @@ const Inspiration = styled.p`
 `;
 
 const Form = styled.form`
-  width: 32%;
+  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -138,6 +138,7 @@ const Button = styled.input.attrs(
   background-color: #fff;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 2px;
 `
 
 const Loader = styled.div`
