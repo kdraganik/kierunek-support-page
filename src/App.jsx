@@ -79,7 +79,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #231F20;
 `;
 
