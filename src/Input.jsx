@@ -24,6 +24,7 @@ display: flex;
 justify-content: center;
 position: relative;
 overflow: hidden;
+border-radius: 2px;
 `;
 
 const Icon = styled.img`
@@ -48,7 +49,7 @@ const IconMail = styled(Icon).attrs({
 const Input = styled.input`
   width: 100%;
   padding: .3rem;
-  border: 1px solid #231F20;
+  border: 2px solid #231F20;
   font-size: 1.2rem;
   z-index: ;
 
