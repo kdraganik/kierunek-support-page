@@ -64,8 +64,11 @@ const App = () => {
           <InputElement type='name'/>
           <InputElement type='mail'/>
           <Link href="./polityka.html">Polityka prywatności</Link>
-          { showLoader ? <Loader><div></div><div></div><div></div><div></div></Loader> : <Button value="Wspieram" /> }
-          {status === 'ERROR' && (<p>Something went wrong. Please try again.</p>)}
+          { showLoader ? 
+            <Loader><div></div><div></div><div></div><div></div></Loader> :
+            <Button value="Wspieram" /> 
+          }
+          {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
         </Form>
       </Wrapper>
     )
@@ -84,7 +87,10 @@ const Wrapper = styled.div`
 `;
 
 const DescriptionContainer = styled.div`
-  width: 40%;
+  width: 90%;
+  @media (min-width: 600px) { width: 80% }
+  @media (min-width: 768px) { width: 60% }
+  @media (min-width: 1200px) { width: 40% }
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -93,6 +99,7 @@ const DescriptionContainer = styled.div`
 
 const Header2 = styled.h2`
   font-size: 2.4rem;
+  text-align: center;
 `;
 
 const BigLogo = styled.img.attrs({
@@ -109,11 +116,14 @@ const Inspiration = styled.p`
 `;
 
 const Form = styled.form`
-  width: 25%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 80%;
+  @media (min-width: 600px) { width: 60% }
+  @media (min-width: 768px) { width: 40% }
+  @media (min-width: 1200px) { width: 25% }
 `;
 
 const Link = styled.a`
@@ -134,18 +144,24 @@ const Button = styled.input.attrs(
   margin-top: 1.2rem;
   width: 180px;
   height: 2.8rem;
-  border: 2px solid #231F20;
-  background-color: #fff;
   font-weight: bold;
   cursor: pointer;
   border-radius: 2px;
+  border: 2px solid #231F20;
+  background-color: #fff;
+  transition: all .3s ease-out;
+
+  &:hover{
+    background-color: #231F20;
+    color: #fff;
+  }
 `
 
 const Loader = styled.div`
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 4rem;
+  height: 4rem;
 
   & div {
     position: absolute;
