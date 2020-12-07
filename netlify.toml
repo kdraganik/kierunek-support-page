@@ -1,6 +1,7 @@
 [build]
-  functions = 'functions'
-  publish = 'build'
+  command = "cd functions && npm i & cd .."
+  functions = "functions"
+  publish = "build"
 
 [[redirects]]
   from = '/api/*'

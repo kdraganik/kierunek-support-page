@@ -1,40 +1,40 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
 
 import InputElement from './Input';
+
+const stripePromise = loadStripe('pk_test_51Hv3gHBv2MyjoHSJroyyc5ztvGhTYIjNEdV4eVIf2pKfFcfZtJE1xP6W1FhzTJBUOTiXVPgLeDfjAEa8PiHVMen400OIuPN5CX');
 
 const App = () => {
   const [status, setStatus] = useState('');
   const [showLoader, setShowLoader] = useState(false);
 
-  const handleSubmit = e => {
-    e.preventDefault();
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     setShowLoader(true);
-  
-    const name = e.target.querySelector('input[type="text"]').value;
-    const amount = e.target.querySelector('input[type="number"]').value;
-    const email = e.target.querySelector('input[type="email"]').value;
-    const data ={
-      name,
-      amount,
-      email
+    const amount = event.target.querySelector('input[type="number"]').value;
+    const data = {
+      amount
     }
-    fetch('/api/payment', {
+
+    const stripe = await stripePromise;
+
+    const response = await fetch('/api/create-checkout', { 
       method: 'POST',
       body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        setStatus('SUCCESS');
-        setShowLoader(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setStatus('ERROR');
-        setShowLoader(false);
-      });
+    });
+
+    const session = await response.json();
+
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      setStatus('ERROR');
+      console.log(result.error.message);
+    }
   };
 
   if (status === 'SUCCESS') {
