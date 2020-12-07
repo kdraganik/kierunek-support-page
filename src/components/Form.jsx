@@ -8,7 +8,7 @@ const stripePromise = loadStripe('pk_test_51Hv3gHBv2MyjoHSJroyyc5ztvGhTYIjNEdV4e
 const Form = () => {
 
   const [showLoader, setShowLoader] = useState(false);
-  const [amount, setAmount] = useState(2);
+  const [amount, setAmount] = useState(1);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -37,8 +37,8 @@ const Form = () => {
 
   const handleAmountChange = (e) => {
     const value = e.target.value.replace(/^0+/, '') || 0;
-    if(value < 2){
-      setAmount(2)
+    if(value < 0){
+      setAmount(0)
     }
     else{
       setAmount(value);
@@ -48,10 +48,18 @@ const Form = () => {
   return (
     <Wrapper onSubmit={handleSubmit}>
         <AmountInputBox>
-          <DecreaseButton onClick={ () => amount > 2 ? setAmount( amount - 1) : setAmount(2) }/>
-          <AmountInput value={ amount } onChange={ handleAmountChange }/>
+          <DecreaseButton onClick={ () => amount > 1 ? setAmount( amount - 1) : setAmount(1) }/>
+          <AmountInput value={ amount } onChange={ handleAmountChange } style={{width: amount.toString().length + 1 + 'ch'}}/>
+          <CurrencyText>zł</CurrencyText>
           <IncreaseButton onClick={ () => setAmount( amount + 1) }/>
         </AmountInputBox>
+        <DropdownInputBox>
+          <DropdownInput>
+            <option value="mostImportant">Najbardziej pilny cel</option>
+            <option value="sprzet">Sprzęt do streamowania</option>
+            <option value="poczatek">Konferencja Początek</option>
+          </DropdownInput>
+        </DropdownInputBox>
         { showLoader ? 
           <Loader><div></div><div></div><div></div><div></div></Loader> :
           <SubmitButton value="Wspieram" /> 
@@ -79,7 +87,7 @@ const AmountInputBox = styled.div`
 const AmountInput = styled.input.attrs({
   type: 'number'
 })`
-  width: 9rem;
+  width: 1ch;
   font-size: 3rem;
   border: none;
   outline: none;
@@ -92,10 +100,15 @@ const AmountInput = styled.input.attrs({
   }
 `;
 
+const CurrencyText = styled.div`
+  font-size: 3rem;
+`;
+
 const IncreaseButton = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
+  margin-left: .8rem;
 
   :before, :after{
     position: absolute;
@@ -115,7 +128,6 @@ const DecreaseButton = styled.div`
   position: relative;
   width: 2rem;
   height: 2rem;
-  margin-right: .2rem;
 
   :before {
     position: absolute;
@@ -128,6 +140,20 @@ const DecreaseButton = styled.div`
 
   :before {
     transform: rotate(90deg);
+  }
+`;
+
+const DropdownInputBox = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const DropdownInput = styled.select`
+  margin: 1.5rem 0;
+  border: none;
+  font-size 2rem;
+  > option{
+    text-align: center;
   }
 `;
 
