@@ -1,43 +1,8 @@
 import styled from 'styled-components';
-import { useState } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
 
-import InputElement from './Input';
+import Form from './components/Form';
 
-const stripePromise = loadStripe('pk_test_51Hv3gHBv2MyjoHSJroyyc5ztvGhTYIjNEdV4eVIf2pKfFcfZtJE1xP6W1FhzTJBUOTiXVPgLeDfjAEa8PiHVMen400OIuPN5CX');
-
-const App = () => {
-  const [status, setStatus] = useState('');
-  const [showLoader, setShowLoader] = useState(false);
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setShowLoader(true);
-    const amount = event.target.querySelector('input[type="number"]').value;
-    const data = {
-      amount
-    }
-
-    const stripe = await stripePromise;
-
-    const response = await fetch('/api/create-checkout', { 
-      method: 'POST',
-      body: JSON.stringify(data)
-    });
-
-    const session = await response.json();
-
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-
-    if (result.error) {
-      setStatus('ERROR');
-      console.log(result.error.message);
-    }
-  };
-
-      
+const App = () => {      
   return(
     <Wrapper>
       <DescriptionContainer>
@@ -47,20 +12,11 @@ const App = () => {
           Chcemy, aby wszystko, co robimy miało największą jakość. 
           Jakość Nieba. 
           Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
-          możesz wesprzeć nas w naszych działaniach.
+          możesz nas wesprzeć.
         </Inspiration>
       </DescriptionContainer>
-      <Form onSubmit={handleSubmit}>
-        <InputElement type='money'/>
-        <InputElement type='name'/>
-        <InputElement type='mail'/>
-        <Link href="./polityka.html">Polityka prywatności</Link>
-        { showLoader ? 
-          <Loader><div></div><div></div><div></div><div></div></Loader> :
-          <Button value="Wspieram" /> 
-        }
-        {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
-      </Form>
+      <Form />
+      <Link href="./polityka.html">Polityka prywatności</Link>
     </Wrapper>
   )
 }
@@ -105,110 +61,9 @@ const Inspiration = styled.p`
   text-align: center;
 `;
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 80%;
-  @media (min-width: 600px) { width: 60% }
-  @media (min-width: 768px) { width: 40% }
-  @media (min-width: 1200px) { width: 25% }
-`;
-
 const Link = styled.a`
-margin-top: 1.2rem;
-  color: #231F20;
-`;
-
-const Button = styled.input.attrs(
-  {
-    type: 'submit'
-  }
-)
-`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   margin-top: 1.2rem;
-  width: 180px;
-  height: 2.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 2px;
-  border: 2px solid #231F20;
-  background-color: #fff;
-  transition: all .3s ease-out;
-
-  &:hover{
-    background-color: #231F20;
-    color: #fff;
-  }
-`
-
-const Loader = styled.div`
-  display: inline-block;
-  position: relative;
-  width: 4rem;
-  height: 4rem;
-
-  & div {
-    position: absolute;
-    top: 33px;
-    width: 13px;
-    height: 13px;
-    border-radius: 50%;
-    background: #231F20;
-    animation-timing-function: cubic-bezier(0, 1, 1, 0);
-  }
-
-  div:nth-child(1) {
-    left: 8px;
-    animation: lds-ellipsis1 0.6s infinite;
-  }
-
-  div:nth-child(2) {
-    left: 8px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-
-  div:nth-child(3) {
-    left: 32px;
-    animation: lds-ellipsis2 0.6s infinite;
-  }
-
-  div:nth-child(4) {
-    left: 56px;
-    animation: lds-ellipsis3 0.6s infinite;
-  }
-
-  @keyframes lds-ellipsis1 {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  @keyframes lds-ellipsis3 {
-    0% {
-      transform: scale(1);
-    }
-    100% {
-      transform: scale(0);
-    }
-  }
-
-  @keyframes lds-ellipsis2 {
-    0% {
-      transform: translate(0, 0);
-    }
-    100% {
-      transform: translate(24px, 0);
-    }
-  }
-`;
+  color: #231F20;
+`;  
 
 export default App;
