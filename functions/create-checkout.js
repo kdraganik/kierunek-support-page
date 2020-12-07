@@ -4,8 +4,6 @@ exports.handler = async (event) => {
   const data = JSON.parse(event.body);
   const amount = data.amount * 100
 
-  console.log(amount);
-
   const session = await stripe.checkout.sessions.create({
     submit_type: 'donate',
     mode: 'payment',
