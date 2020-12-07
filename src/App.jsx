@@ -37,42 +37,32 @@ const App = () => {
     }
   };
 
-  if (status === 'SUCCESS') {
-    return (
-      <Wrapper>
-        <Header2>Dziękujemy za wsparcie!</Header2>
-        <div style={{marginBottom: '2rem'}}></div>
+      
+  return(
+    <Wrapper>
+      <DescriptionContainer>
+        <Header2>wspieram</Header2>
         <BigLogo/>
-      </Wrapper>
-    );
-  }
-  else{
-    return(
-      <Wrapper>
-        <DescriptionContainer>
-          <Header2>wspieram</Header2>
-          <BigLogo/>
-          <Inspiration>
-            Chcemy, aby wszystko, co robimy miało największą jakość. 
-            Jakość Nieba. 
-            Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
-            możesz wesprzeć nas w naszych działaniach.
-          </Inspiration>
-        </DescriptionContainer>
-        <Form onSubmit={handleSubmit}>
-          <InputElement type='money'/>
-          <InputElement type='name'/>
-          <InputElement type='mail'/>
-          <Link href="./polityka.html">Polityka prywatności</Link>
-          { showLoader ? 
-            <Loader><div></div><div></div><div></div><div></div></Loader> :
-            <Button value="Wspieram" /> 
-          }
-          {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
-        </Form>
-      </Wrapper>
-    )
-  }
+        <Inspiration>
+          Chcemy, aby wszystko, co robimy miało największą jakość. 
+          Jakość Nieba. 
+          Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
+          możesz wesprzeć nas w naszych działaniach.
+        </Inspiration>
+      </DescriptionContainer>
+      <Form onSubmit={handleSubmit}>
+        <InputElement type='money'/>
+        <InputElement type='name'/>
+        <InputElement type='mail'/>
+        <Link href="./polityka.html">Polityka prywatności</Link>
+        { showLoader ? 
+          <Loader><div></div><div></div><div></div><div></div></Loader> :
+          <Button value="Wspieram" /> 
+        }
+        {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
+      </Form>
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.div`
