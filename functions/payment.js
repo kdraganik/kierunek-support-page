@@ -3,8 +3,10 @@ exports.handler = async (event, _context, callback) => {
   const clientId = process.env.CLIENT_ID;
   const clientSecret = process.env.CLIENT_SECRET;
 
+  const data = await JSON.parse(event.body);
+
   const accessToken = await getAccessToken(clientId, clientSecret);
-  const redirectUrl = await createOrder(accessToken, posId);
+  const redirectUrl = await createOrder(accessToken, posId, data);
   
   return {
     statusCode: 200,
@@ -36,7 +38,7 @@ const getAccessToken = async (clientId, clientSecret) => {
   }
 }
 
-const createOrder = async (accessToken, posId) => {
+const createOrder = async (accessToken, posId, reqData) => {
   var request = require('request-promise');
 
   const response = await request({
@@ -48,28 +50,21 @@ const createOrder = async (accessToken, posId) => {
       'Authorization': `Bearer ${accessToken}`
     },
     body: `{
-      "notifyUrl": "https://your.eshop.com/notify",
       "customerIp": "127.0.0.1",
       "merchantPosId": "${posId}",
-      "description": "RTV market",
+      "description": "Kosciol Kierunek - wsparcie",
       "currencyCode": "PLN",
-      "totalAmount": "21000",
+      "totalAmount": "${ reqData.amount * 100 }",
       "buyer": {
-          "email": "john.doe@example.com",
-          "phone": "654111654",
-          "firstName": "John",
-          "lastName": "Doe",
+          "email": "${reqData.email}",
+          "firstName": "${reqData.name.split(' ')[0]}",
+          "lastName": "${reqData.name.split(' ')[reqData.name.split(' ').length - 1]}",
           "language": "pl"
       },
       "products": [
           {
-              "name": "Wireless Mouse for Laptop",
-              "unitPrice": "15000",
-              "quantity": "1"
-          },
-          {
-              "name": "HDMI cable",
-              "unitPrice": "6000",
+              "name": "Wsparcie",
+              "unitPrice": "${ reqData.amount * 100 }",
               "quantity": "1"
           }
       ]
@@ -77,8 +72,6 @@ const createOrder = async (accessToken, posId) => {
   });
 
   const data = await JSON.parse(response);
-
-  console.log(data);
 
   return data.redirectUri;
 }

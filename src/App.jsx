@@ -13,16 +13,16 @@ const App = () => {
     setShowLoader(true);
     setStatus('');
   
-    // const name = e.target.querySelector('input[type="text"]').value;
-    // const amount = e.target.querySelector('input[type="number"]').value;
-    // const email = e.target.querySelector('input[type="email"]').value;
-    // const data ={
-    //   name,
-    //   amount,
-    //   email
-    // }
+    const name = e.target.querySelector('input[type="text"]').value;
+    const amount = e.target.querySelector('input[type="number"]').value;
+    const email = e.target.querySelector('input[type="email"]').value;
+    const data ={
+      name,
+      amount,
+      email
+    }
 
-    const { redirectUrl } = await requestPayment();
+    const { redirectUrl } = await requestPayment(data);
     window.location.href = redirectUrl;
   }
 
@@ -53,13 +53,12 @@ const App = () => {
   );
 }
 
-const requestPayment = async () => {
+const requestPayment = async (payload) => {
   const axios = require('axios');
 
-  const { data } = await axios({
-    method: 'GET',
-    url: '/api/payment'
-  });
+  console.log(payload);
+
+  const { data } = await axios.post('/api/payment', payload);
 
   return data;
 }
