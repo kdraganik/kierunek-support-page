@@ -25,7 +25,7 @@ const App = () => {
     const authData = await getAuthData();
     console.log(authData);
 
-    //createOrder(authData);
+    createOrder(authData);
   }
 
   return(
