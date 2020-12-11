@@ -22,10 +22,8 @@ const App = () => {
     //   email
     // }
 
-    const authData = await getAuthData();
-    console.log(authData);
-
-    createOrder(authData);
+    const { redirectUrl } = await requestPayment();
+    window.location.href = redirectUrl;
   }
 
   return(
@@ -55,7 +53,7 @@ const App = () => {
   );
 }
 
-const getAuthData = async () => {
+const requestPayment = async () => {
   const axios = require('axios');
 
   const { data } = await axios({
@@ -65,58 +63,6 @@ const getAuthData = async () => {
 
   return data;
 }
-
-const createOrder = async ({ accessToken, posId}) => {  
-  var request = require('request');
-
-  //sandbox
-  accessToken = 'd9a4536e-62ba-4f60-8017-6053211d3f47';
-  posId = '300746';
-
-  request({
-    method: 'POST',
-    url: 'https://secure.snd.payu.com/api/v2_1/orders',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${accessToken}`
-    },
-    body: `{
-      "notifyUrl": "https://your.eshop.com/notify",
-      "customerIp": "127.0.0.1",
-      "merchantPosId": "${posId}",
-      "description": "RTV market",
-      "currencyCode": "PLN",
-      "totalAmount": "21000",
-      "buyer": {
-          "email": "john.doe@example.com",
-          "phone": "654111654",
-          "firstName": "John",
-          "lastName": "Doe",
-          "language": "pl"
-      },
-      "products": [
-          {
-              "name": "Wireless Mouse for Laptop",
-              "unitPrice": "15000",
-              "quantity": "1"
-          },
-          {
-              "name": "HDMI cable",
-              "unitPrice": "6000",
-              "quantity": "1"
-          }
-      ]
-    }`
-  },
-  function (error, response, body) {
-    if(!error){
-      window.location.href = response.url;
-    }
-    else{
-      console.log(error);
-    }    
-  });
-} 
 
 const Wrapper = styled.div`
   width: 100vw;
