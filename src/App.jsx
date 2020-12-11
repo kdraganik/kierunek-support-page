@@ -7,10 +7,11 @@ const App = () => {
   const [status, setStatus] = useState('');
   const [showLoader, setShowLoader] = useState(false);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     setShowLoader(true);
+    setStatus('');
   
     const name = e.target.querySelector('input[type="text"]').value;
     const amount = e.target.querySelector('input[type="number"]').value;
@@ -20,59 +21,46 @@ const App = () => {
       amount,
       email
     }
-    fetch('/api/payment', {
-      method: 'POST',
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        setStatus('SUCCESS');
-        setShowLoader(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setStatus('ERROR');
-        setShowLoader(false);
-      });
-  };
 
-  if (status === 'SUCCESS') {
-    return (
-      <Wrapper>
-        <Header2>Dziękujemy za wsparcie!</Header2>
-        <div style={{marginBottom: '2rem'}}></div>
+    const { redirectUrl } = await requestPayment(data);
+    window.location.href = redirectUrl;
+  }
+
+  return(
+    <Wrapper>
+      <DescriptionContainer>
+        <Header2>wspieram</Header2>
         <BigLogo/>
-      </Wrapper>
-    );
-  }
-  else{
-    return(
-      <Wrapper>
-        <DescriptionContainer>
-          <Header2>wspieram</Header2>
-          <BigLogo/>
-          <Inspiration>
-            Chcemy, aby wszystko, co robimy miało największą jakość. 
-            Jakość Nieba. 
-            Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
-            możesz wesprzeć nas w naszych działaniach.
-          </Inspiration>
-        </DescriptionContainer>
-        <Form onSubmit={handleSubmit}>
-          <InputElement type='money'/>
-          <InputElement type='name'/>
-          <InputElement type='mail'/>
-          <Link href="./polityka.html">Polityka prywatności</Link>
-          { showLoader ? 
-            <Loader><div></div><div></div><div></div><div></div></Loader> :
-            <Button value="Wspieram" /> 
-          }
-          {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
-        </Form>
-      </Wrapper>
-    )
-  }
+        <Inspiration>
+          Chcemy, aby wszystko, co robimy miało największą jakość. 
+          Jakość Nieba. 
+          Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
+          możesz wesprzeć nas w naszych działaniach.
+        </Inspiration>
+      </DescriptionContainer>
+      <Form onSubmit={handleSubmit}>
+        <InputElement type='money'/>
+        <InputElement type='name'/>
+        <InputElement type='mail'/>
+        <Link href="./polityka.html">Polityka prywatności</Link>
+        { showLoader ? 
+          <Loader><div></div><div></div><div></div><div></div></Loader> :
+          <Button value="Wspieram" /> 
+        }
+        {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
+      </Form>
+    </Wrapper>
+  );
+}
+
+const requestPayment = async (payload) => {
+  const axios = require('axios');
+
+  console.log(payload);
+
+  const { data } = await axios.post('/api/payment', payload);
+
+  return data;
 }
 
 const Wrapper = styled.div`

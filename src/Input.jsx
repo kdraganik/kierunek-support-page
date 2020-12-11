@@ -46,7 +46,9 @@ const IconMail = styled(Icon).attrs({
 })``;
 
 
-const Input = styled.input`
+const Input = styled.input.attrs({
+  required: true
+})`
   width: 100%;
   padding: .3rem;
   border: 2px solid #231F20;
