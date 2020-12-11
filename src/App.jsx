@@ -7,73 +7,116 @@ const App = () => {
   const [status, setStatus] = useState('');
   const [showLoader, setShowLoader] = useState(false);
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     setShowLoader(true);
+    setStatus('');
   
-    const name = e.target.querySelector('input[type="text"]').value;
-    const amount = e.target.querySelector('input[type="number"]').value;
-    const email = e.target.querySelector('input[type="email"]').value;
-    const data ={
-      name,
-      amount,
-      email
-    }
-    fetch('/api/payment', {
-      method: 'POST',
-      body: JSON.stringify(data)
-    })
-      .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        setStatus('SUCCESS');
-        setShowLoader(false);
-      })
-      .catch(error => {
-        console.error(error);
-        setStatus('ERROR');
-        setShowLoader(false);
-      });
-  };
+    // const name = e.target.querySelector('input[type="text"]').value;
+    // const amount = e.target.querySelector('input[type="number"]').value;
+    // const email = e.target.querySelector('input[type="email"]').value;
+    // const data ={
+    //   name,
+    //   amount,
+    //   email
+    // }
 
-  if (status === 'SUCCESS') {
-    return (
-      <Wrapper>
-        <Header2>Dziękujemy za wsparcie!</Header2>
-        <div style={{marginBottom: '2rem'}}></div>
+    const authData = await getAuthData();
+    console.log(authData);
+
+    //createOrder(authData);
+  }
+
+  return(
+    <Wrapper>
+      <DescriptionContainer>
+        <Header2>wspieram</Header2>
         <BigLogo/>
-      </Wrapper>
-    );
-  }
-  else{
-    return(
-      <Wrapper>
-        <DescriptionContainer>
-          <Header2>wspieram</Header2>
-          <BigLogo/>
-          <Inspiration>
-            Chcemy, aby wszystko, co robimy miało największą jakość. 
-            Jakość Nieba. 
-            Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
-            możesz wesprzeć nas w naszych działaniach.
-          </Inspiration>
-        </DescriptionContainer>
-        <Form onSubmit={handleSubmit}>
-          <InputElement type='money'/>
-          <InputElement type='name'/>
-          <InputElement type='mail'/>
-          <Link href="./polityka.html">Polityka prywatności</Link>
-          { showLoader ? 
-            <Loader><div></div><div></div><div></div><div></div></Loader> :
-            <Button value="Wspieram" /> 
-          }
-          {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
-        </Form>
-      </Wrapper>
-    )
-  }
+        <Inspiration>
+          Chcemy, aby wszystko, co robimy miało największą jakość. 
+          Jakość Nieba. 
+          Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
+          możesz wesprzeć nas w naszych działaniach.
+        </Inspiration>
+      </DescriptionContainer>
+      <Form onSubmit={handleSubmit}>
+        <InputElement type='money'/>
+        <InputElement type='name'/>
+        <InputElement type='mail'/>
+        <Link href="./polityka.html">Polityka prywatności</Link>
+        { showLoader ? 
+          <Loader><div></div><div></div><div></div><div></div></Loader> :
+          <Button value="Wspieram" /> 
+        }
+        {status === 'ERROR' && (<p style={{marginTop: "1rem", color: "red"}}>Something went wrong. Please try again.</p>)}
+      </Form>
+    </Wrapper>
+  );
 }
+
+const getAuthData = async () => {
+  const axios = require('axios');
+
+  const { data } = await axios({
+    method: 'GET',
+    url: '/api/payment'
+  });
+
+  return data;
+}
+
+const createOrder = async ({ accessToken, posId}) => {  
+  var request = require('request');
+
+  //sandbox
+  accessToken = 'd9a4536e-62ba-4f60-8017-6053211d3f47';
+  posId = '300746';
+
+  request({
+    method: 'POST',
+    url: 'https://secure.snd.payu.com/api/v2_1/orders',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${accessToken}`
+    },
+    body: `{
+      "notifyUrl": "https://your.eshop.com/notify",
+      "customerIp": "127.0.0.1",
+      "merchantPosId": "${posId}",
+      "description": "RTV market",
+      "currencyCode": "PLN",
+      "totalAmount": "21000",
+      "buyer": {
+          "email": "john.doe@example.com",
+          "phone": "654111654",
+          "firstName": "John",
+          "lastName": "Doe",
+          "language": "pl"
+      },
+      "products": [
+          {
+              "name": "Wireless Mouse for Laptop",
+              "unitPrice": "15000",
+              "quantity": "1"
+          },
+          {
+              "name": "HDMI cable",
+              "unitPrice": "6000",
+              "quantity": "1"
+          }
+      ]
+    }`
+  },
+  function (error, response, body) {
+    if(!error){
+      window.location.href = response.url;
+    }
+    else{
+      console.log(error);
+    }    
+  });
+} 
 
 const Wrapper = styled.div`
   width: 100vw;
