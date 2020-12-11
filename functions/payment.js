@@ -1,6 +1,4 @@
 exports.handler = async (event, _context, callback) => {
-
-  // production
   const posId = process.env.POS_ID;
   const clientId = process.env.CLIENT_ID;
   const clientSecret = process.env.CLIENT_SECRET;
@@ -17,10 +15,6 @@ exports.handler = async (event, _context, callback) => {
 };
 
 const getAccessToken = async (clientId, clientSecret) => {
-  //sandbox
-  clientId = '145227';
-  clientSecret = '12f071174cb7eb79d4aac5bc2f07563f';
-
   var request = require('request-promise');
 
   try{
@@ -42,16 +36,12 @@ const getAccessToken = async (clientId, clientSecret) => {
   }
 }
 
-const createOrder = async ({ accessToken, posId}) => {
-  //sandbox
-  accessToken = 'd9a4536e-62ba-4f60-8017-6053211d3f47';
-  posId = '300746';
-
+const createOrder = async (accessToken, posId) => {
   var request = require('request-promise');
 
   const response = await request({
     method: 'POST',
-    url: 'https://secure.snd.payu.com/api/v2_1/orders',
+    url: 'https://secure.payu.com/api/v2_1/orders',
     simple: false,
     headers: {
       'Content-Type': 'application/json',
