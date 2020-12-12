@@ -32,10 +32,9 @@ const App = () => {
         <Header2>wspieram</Header2>
         <BigLogo/>
         <Inspiration>
-          Chcemy, aby wszystko, co robimy miało największą jakość. 
-          Jakość Nieba. 
-          Jeżeli chcesz mieć autentyczny udział w naszych działaniach, 
-          możesz wesprzeć nas w naszych działaniach.
+          Chcemy, aby wszystko, co robimy miało jak najwyższą jakość. 
+          Jeżeli chcesz mieć realny udział w tym, co robimy, 
+          zachęcamy do wspierania naszych działań.
         </Inspiration>
       </DescriptionContainer>
       <Form onSubmit={handleSubmit}>
