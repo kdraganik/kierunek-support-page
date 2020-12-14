@@ -5,7 +5,7 @@ const Form = () => {
   const [status, setStatus] = useState('');
   const [showLoader, setShowLoader] = useState(false);
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(1);
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
 
@@ -44,36 +44,37 @@ const Form = () => {
 
   return (
     <Wrapper onSubmit={ handleSubmit }>
-      <InputsContainer>
-        <InputBox>
-          <LabelAmount>Kwota</LabelAmount>
-          <InputAmount 
-            ref={ input => input && amount === 0 && input.focus() }
-            value={ amount } 
-            onChange={ handleAmountChange }
-          />
-          <CurrencyText valLen={ amount.toString().length }>zł</CurrencyText>
-          <AmountButtonsBox>
-            <DecreaseButton onClick={ () => Number(amount) > 1 ? setAmount( Number(amount) - 1) : setAmount(1) }/>
-            <IncreaseButton onClick={ () => setAmount( Number(amount) + 1) }/>
-          </AmountButtonsBox>
-        </InputBox>
-        <InputBox>
-          <LabelName>Imię i nazwisko</LabelName>
-          <InputName value={ fullName } onChange={ e => setFullName(e.currentTarget.value) } />
-        </InputBox>
-        <InputBox>
-          <LabelEmail>E-mail</LabelEmail>
-          <InputEmail value={ email } onChange={ e => setEmail(e.currentTarget.value) } />
-        </InputBox>
-      </InputsContainer>
-      <Link href="./polityka.html">Polityka prywatności</Link>
-      { 
-        showLoader 
-        ? <Loader><div></div><div></div><div></div><div></div></Loader>
-        : <Button value="Wspieram" /> 
-      }
-      {status === 'ERR' && (<p style={{textAlign: "center", marginTop: "1rem", color: "red"}}>Coś poszło nie tak. Proszę spróbować ponownie.</p>)}
+      <FormContainer>
+        <InputsContainer>
+          <InputBox>
+            <LabelAmount>Kwota</LabelAmount>
+            <InputAmount 
+              value={ amount } 
+              onChange={ handleAmountChange }
+            />
+            <CurrencyText valLen={ amount.toString().length }>zł</CurrencyText>
+            <AmountButtonsBox>
+              <DecreaseButton onClick={ () => Number(amount) > 1 ? setAmount( Number(amount) - 1) : setAmount(1) }/>
+              <IncreaseButton onClick={ () => setAmount( Number(amount) + 1) }/>
+            </AmountButtonsBox>
+          </InputBox>
+          <InputBox>
+            <LabelName>Imię i nazwisko</LabelName>
+            <InputName value={ fullName } onChange={ e => setFullName(e.currentTarget.value) } />
+          </InputBox>
+          <InputBox>
+            <LabelEmail>E-mail</LabelEmail>
+            <InputEmail value={ email } onChange={ e => setEmail(e.currentTarget.value) } />
+          </InputBox>
+        </InputsContainer>
+        <Link href="./polityka.html">Polityka prywatności</Link>
+        { 
+          showLoader 
+          ? <Loader><div></div><div></div><div></div><div></div></Loader>
+          : <Button value="wspieram" /> 
+        }
+        {status === 'ERR' && (<p style={{textAlign: "center", marginTop: "1em", color: "red"}}>Coś poszło nie tak. Proszę spróbować ponownie.</p>)}
+      </FormContainer>
     </Wrapper>
   );
 }
@@ -86,20 +87,36 @@ const requestPayment = async (payload) => {
   return data;
 }
 
-const Wrapper = styled.form`
+const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  @media (max-width: 768px) { 
+    align-items: center;
+  }
+`;
+
+const FormContainer = styled.form`
+  width: 75%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  margin: 1em;
 
-  @media (min-width: 600px) { width: 60% }
-  @media (min-width: 768px) { width: 40% }
-  @media (min-width: 1200px) { width: 25% }
-`;
+  @media (max-width: 1200px) { 
+    width: 80%;
+  }
+  @media (max-width: 992px) { 
+    width: 85%;
+  }
+`
 
 const InputsContainer = styled.div`
-  width: 80%;
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -118,7 +135,7 @@ const Label = styled.label`
   display: block;
   margin-bottom: .2em;
   font-weight: 600;
-  font-size: .9rem;
+  font-size: .9em;
   text-transform: uppercase;
 `;
 
@@ -131,9 +148,9 @@ const Input = styled.input.attrs({
   font-size: 1.8em;
   outline: none;
   z-index: 2;
+  border-bottom: 1px solid #fff;
   
   :focus{
-    transform: translateY(1px);
     border-bottom: 1px solid black;
   }
 
@@ -160,7 +177,7 @@ ${props => props.value === '' ? 'border-bottom: 1px solid black;transform: trans
   ::-webkit-inner-spin-button{
     -webkit-appearance: none;
     margin: 0;
-  }  
+  }
 `;
 
 const LabelName = styled(Label).attrs({
@@ -188,8 +205,8 @@ ${props => props.value === '' ? 'border-bottom: 1px solid black;' : ''}
 const CurrencyText = styled.span`
   font-size: 1.8em;
   position: absolute;
-  left: ${props => props.valLen}ch;
-  bottom: -.18em;
+  left: ${props => props.valLen * .92 + .3}ch;
+  bottom: calc(-.18em + 1px);
   z-index: 1;
 `;
 
@@ -225,7 +242,7 @@ const DecreaseButton = styled.div`
   position: relative;
   width: 1.5em;
   height: 1.5em;
-  margin-right: .5rem;
+  margin-right: .5em;
   cursor: pointer;
 
   :before {
@@ -256,9 +273,9 @@ const Button = styled.input.attrs(
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top: 1.2rem;
+  margin-top: 1.2em;
   width: 180px;
-  height: 2.8rem;
+  height: 2.8em;
   font-weight: bold;
   cursor: pointer;
   border-radius: 2px;
@@ -275,8 +292,8 @@ const Button = styled.input.attrs(
 const Loader = styled.div`
   display: inline-block;
   position: relative;
-  width: 4rem;
-  height: 4rem;
+  width: 4em;
+  height: 4em;
 
   & div {
     position: absolute;

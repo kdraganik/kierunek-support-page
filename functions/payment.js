@@ -50,6 +50,7 @@ const createOrder = async (accessToken, posId, reqData) => {
       'Authorization': `Bearer ${accessToken}`
     },
     body: `{
+      "continueUrl": "https://wspieram.kosciolkierunek.pl/success.html",
       "customerIp": "127.0.0.1",
       "merchantPosId": "${posId}",
       "description": "Kosciol Kierunek - wsparcie",
