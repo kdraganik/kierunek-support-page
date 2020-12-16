@@ -5,7 +5,6 @@ const App = () => {
   return(
     <Wrapper>
       <Container top>
-        {/* <Header2>wspieram</Header2> */}
         <Inspiration>
           Chcemy, aby wszystko, co robimy miało jak najwyższą jakość. 
           Jeżeli chcesz mieć realny udział w tym, co robimy, 
@@ -77,11 +76,6 @@ const Divider = styled.div`
   @media (max-width: 768px) {
     display: none;
   }
-`;
-
-const Header2 = styled.h2`
-  font-size: 2.4em;
-  text-align: center;
 `;
 
 const BigLogo = styled.img.attrs({
