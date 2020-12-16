@@ -5,13 +5,13 @@ const App = () => {
   return(
     <Wrapper>
       <Container top>
-        <Header2>wspieram</Header2>
-        <BigLogo/>
+        {/* <Header2>wspieram</Header2> */}
         <Inspiration>
           Chcemy, aby wszystko, co robimy miało jak najwyższą jakość. 
           Jeżeli chcesz mieć realny udział w tym, co robimy, 
           zachęcamy do wspierania naszych działań.
         </Inspiration>
+        <BigLogo/>
       </Container>
       <Divider />
       <Container bottom>
@@ -87,17 +87,19 @@ const Header2 = styled.h2`
 const BigLogo = styled.img.attrs({
   src: "./logo_black.svg"
 })`
-  width: 10.5em;
+  margin-top: .5em;
+  margin-right: 1em;
+  width: 6.5em;
   height: auto;
+  align-self: flex-end;
 `;
 
 const Inspiration = styled.p`
-  margin-top: 1.5em;
+  margin: .5em 0;
   font-size: 1.3em;
-  text-align: center;
 
   @media (max-width: 768px) {
-    margin: 1.5em 1em 0 1.5em;
+    margin: .5em 1em .5e 1.5em;
   }
 `;
 
