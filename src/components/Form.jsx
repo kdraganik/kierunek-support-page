@@ -67,7 +67,7 @@ const Form = () => {
             <InputEmail value={ email } onChange={ e => setEmail(e.currentTarget.value) } />
           </InputBox>
         </InputsContainer>
-        <Link href="./polityka.html">Polityka prywatności</Link>
+        <Link href="./regulamin.html">Regulamin darowizn</Link>
         { 
           showLoader 
           ? <Loader><div></div><div></div><div></div><div></div></Loader>
@@ -128,12 +128,12 @@ const InputBox = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.5em;
+  margin-bottom: .8em;
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: .2em;
+  margin: .2em 0;
   font-weight: 600;
   font-size: .9em;
   text-transform: uppercase;
