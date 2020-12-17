@@ -3,12 +3,15 @@
   padding: 0;
   margin: 0;
 }
+
 body{
   font-family: 'Poppins', sans-serif;
   margin: 1em 5em;
 }
+
 ol, ul{
-  padding: 0 2em;;
+  padding: 0 2em;
+  margin-bottom: .8em;
 }
 
 @media (max-width: 1200px) {
@@ -28,4 +31,15 @@ ol, ul{
     font-size: 0.7em;
     margin: 1em 1.5em;
   }
+}
+
+.main-title{
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.section-title{
+  margin-bottom: .5em;
+  font-size: 1.4em;
 }
