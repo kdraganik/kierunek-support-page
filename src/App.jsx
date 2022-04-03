@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Form from './components/Form';
-import Navbar from './components/Navbar';
-import Account from './components/Account';
+// import Navbar from './components/Navbar';
+// import Account from './components/Account';
 
 const App = () => {
   return(
