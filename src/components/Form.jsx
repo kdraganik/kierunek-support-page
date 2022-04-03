@@ -148,7 +148,7 @@ const Input = styled.input.attrs({
   font-size: 1.8em;
   outline: none;
   z-index: 2;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #E8E3E0;
   
   :focus{
     border-bottom: 1px solid black;
@@ -158,7 +158,7 @@ const Input = styled.input.attrs({
   :-webkit-autofill:hover, 
   :-webkit-autofill:focus, 
   :-webkit-autofill:active  {
-    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    -webkit-box-shadow: 0 0 0 30px #E8E3E0 inset !important;
   }
 `;
 
@@ -280,12 +280,12 @@ const Button = styled.input.attrs(
   cursor: pointer;
   border-radius: 2px;
   border: 2px solid #231F20;
-  background-color: #fff;
+  background-color: #E8E3E0;
   transition: all .3s ease-out;
 
   &:hover{
     background-color: #231F20;
-    color: #fff;
+    color: #E8E3E0;
   }
 `
 

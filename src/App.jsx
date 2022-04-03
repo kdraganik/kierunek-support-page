@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import Form from './components/Form';
+import Navbar from './components/Navbar'
 
 const App = () => {
   return(
     <Wrapper>
+      <Navbar/>
       <Container top>
         <Inspiration>
-          Chcemy, aby wszystko, co robimy miało jak najwyższą jakość. 
-          Jeżeli chcesz mieć realny udział w tym, co robimy, 
-          zachęcamy do wspierania naszych działań.
+          Dbamy o to, aby wszystko, co robimy, miało jak najwyższą jakość. Jeżeli podobają Ci się nasze działania i chcesz mieć w nich realny udział, zachęcamy do wsparcia finansowego.
         </Inspiration>
         <BigLogo/>
       </Container>
@@ -27,6 +27,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-family: 'Poppins', sans-serif;
+  background-color: #E8E3E0;
   color: #231F20;
 
   @media (max-width: 1200px) { 
