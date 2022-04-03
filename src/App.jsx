@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Form from './components/Form';
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
+import Account from './components/Account'
 
 const App = () => {
   return(
@@ -16,6 +17,7 @@ const App = () => {
       <Container bottom>
         <Form />
       </Container>
+      <Account />
     </Wrapper>
   );
 }
