@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import Form from './components/Form';
 import Navbar from './components/Navbar';
-import Account from './components/Account'
+import Account from './components/Account';
 
 const App = () => {
   return(
     <Wrapper>
-      <Navbar/>
+      {/* <Navbar/> */}
       <Container top>
         <Inspiration>
           Dbamy o to, aby wszystko, co robimy, miało jak najwyższą jakość. Jeżeli podobają Ci się nasze działania i chcesz mieć w nich realny udział, zachęcamy do wsparcia finansowego.
@@ -17,7 +17,7 @@ const App = () => {
       <Container bottom>
         <Form />
       </Container>
-      <Account />
+      {/* <Account /> */}
     </Wrapper>
   );
 }
