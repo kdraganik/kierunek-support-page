@@ -19,7 +19,7 @@ const Navbar = () => {
           <Link href='https://kosciolkierunek.pl/kosciol-dzieciecy'> Kosciol dzieciecy </Link>
         </LinkItem>
         <LinkItem>
-          <Link href='https://karty-modlitwy.kosciolkierunek.pl/poznaj-nas'> Karty modlitwy </Link>
+          <Link href='https://karty-modlitwy.kosciolkierunek.pl/'> Karty modlitwy </Link>
         </LinkItem>
         <LinkItem>
           <Link href='https://wspieram.kosciolkierunek.pl/'> Wsparcie </Link>
