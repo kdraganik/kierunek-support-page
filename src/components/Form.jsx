@@ -71,7 +71,7 @@ const Form = () => {
         { 
           showLoader 
           ? <Loader><div></div><div></div><div></div><div></div></Loader>
-          : <Button value="wspieram" /> 
+          : <Button>wspieram</Button> 
         }
         {status === 'ERR' && (<p style={{textAlign: "center", marginTop: "1em", color: "red"}}>Coś poszło nie tak. Proszę spróbować ponownie.</p>)}
       </FormContainer>
@@ -282,6 +282,7 @@ const Button = styled.button.attrs(
   border: 2px solid #231F20;
   background-color: #E8E3E0;
   transition: all .3s ease-out;
+  color: #231f20;
 
   &:hover{
     background-color: #231F20;
