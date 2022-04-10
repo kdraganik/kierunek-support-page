@@ -14,17 +14,22 @@ const Account = () => {
 }
 
 const Wrapper = styled.div`
+  padding: 12px;
+  margin-top: 30px;
   font-size: 12px;
   color: #231f20;
-  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100vw;
-  left: 0;
-  bottom: 50px;
   z-index: 1;
+
+  @media (min-width: 768px){
+    position: absolute;
+    left: 0;
+    bottom: 50px;
+  }
 `;
 
 const Title = styled.h2`

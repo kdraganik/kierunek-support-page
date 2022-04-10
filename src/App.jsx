@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import Form from './components/Form';
-// import Navbar from './components/Navbar';
-// import Account from './components/Account';
+import Navbar from './components/Navbar';
+import Account from './components/Account';
 
 const App = () => {
   return(
     <Wrapper>
-      {/* <Navbar/> */}
+      <Navbar/>
       <Container top>
         <Inspiration>
           Dbamy o to, aby wszystko, co robimy, miało jak najwyższą jakość. Jeżeli podobają Ci się nasze działania i chcesz mieć w nich realny udział, zachęcamy do wsparcia finansowego.
@@ -17,12 +17,13 @@ const App = () => {
       <Container bottom>
         <Form />
       </Container>
-      {/* <Account /> */}
+      <Account />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -60,6 +61,7 @@ const Container = styled.div`
   @media (max-width: 768px) {
     justify-content: ${ props => props.top ? 'flex-end' : 'flex-start'};
     margin: 1em 0;
+    margin-top: ${ props => props.top ? '100px' : 0};
     width: 75%;
   }
 `;
@@ -92,7 +94,7 @@ const BigLogo = styled.img.attrs({
 `;
 
 const Inspiration = styled.p`
-  margin: .5em 0;
+  margin: 1em;
   font-size: 1.3em;
 
   @media (max-width: 768px) {
