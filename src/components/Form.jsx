@@ -263,7 +263,7 @@ const Link = styled.a`
   color: #231F20;
 `;
 
-const Button = styled.input.attrs(
+const Button = styled.button.attrs(
   {
     type: 'submit'
   }
