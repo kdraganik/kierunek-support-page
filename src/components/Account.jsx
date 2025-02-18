@@ -6,7 +6,6 @@ const Account = () => {
       <Title>Numer konta</Title>
       <Owner>
         <p>KOŚCIÓŁ ZIELONOŚWIĄTKOWY ZBÓR "KIERUNEK" WE WROCŁAWIU</p>
-        <p>UŁAŃSKA 5, 52-213 WROCŁAW</p>
       </Owner>
       <Number>31 1090 2590 0000 0001 3939 1058</Number>
     </Wrapper>
